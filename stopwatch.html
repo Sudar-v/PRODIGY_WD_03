@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stopwatch</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Fixed typo: was 100hv */
+      background: linear-gradient(135deg, blcak, skyblue);
+      font-family: Arial, sans-serif; /* Fixed typo */
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjcS1BEScrSaNvpLQEjPkYdp_bevGtntm5xw&s');
+    }
+
+    .stopwatch {
+      background: white;
+      padding: 2rem; /* Fixed: was 'zrem' */
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Fixed typo: 0,2 → 0.2 */
+      text-align: center;
+      
+    }
+    #display {
+      font-size: 3em;
+      font-weight: bold;
+      margin-bottom: 20px; /* Fixed: added value */
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer; /* Fixed typo: was 'pinter' */
+      transition: 0.3s;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+
+    .start {
+      background: #4caf50;
+      color: white;
+    }
+
+    .stop {
+      background: #f44336;
+      color: white;
+    }
+
+    .reset {
+      background: #2196f3;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <div id="display">00:00:00</div>
+    <button class="start" onclick="startTimer()">Start</button>
+    <button class="stop" onclick="stopTimer()">Stop</button>
+    <button class="reset" onclick="resetTimer()">Reset</button>
+  </div>
+
+  <script>
+    let timer;
+    let seconds = 0,
+      minutes = 0,
+      hours = 0;
+    let running = false;
+
+    function updateDisplay() {
+      let h = hours < 10 ? "0" + hours : hours;
+      let m = minutes < 10 ? "0" + minutes : minutes;
+      let s = seconds < 10 ? "0" + seconds : seconds;
+      document.getElementById("display").innerText = `${h}:${m}:${s}`;
+    }
+
+    function startTimer() {
+      if (!running) {
+        running = true;
+        timer = setInterval(() => {
+          seconds++;
+          if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+          }
+          if (minutes === 60) {
+            minutes = 0;
+            hours++;
+          }
+          updateDisplay();
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      running = false;
+      clearInterval(timer);
+    }
+
+    function resetTimer() {
+      running = false;
+      clearInterval(timer);
+      seconds = 0;
+      minutes = 0;
+      hours = 0;
+      updateDisplay();
+    }
+
+    updateDisplay(); // Initial display
+  </script>
+</body>
+</html>
